@@ -40,3 +40,20 @@ $(document).ready(function () {
     }
   });
 });
+$.ajax({
+    url: 'https://your-backend-url/download',  // Update this to your backend URL
+    method: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({ url: videoUrl }),
+    success: function(response) {
+        if (response.success) {
+            $('#message').html('<div class="alert alert-success">Video downloaded successfully!</div>');
+            $('#message').append(`<a href="${response.download_link}" class="btn btn-success mt-2">Download Video</a>`);
+        } else {
+            $('#message').html('<div class="alert alert-danger">' + response.error + '</div>');
+        }
+    },
+    error: function() {
+        $('#message').html('<div class="alert alert-danger">An error occurred while processing your request.</div>');
+    }
+});
